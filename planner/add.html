@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lesson : adding</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/add.css" rel="stylesheet" media="screen">
+    </head>
+    <body>
+        <div class="col-2">
+            <div class="add-lesson-row border-bottom">
+                <div>
+                    <span>Label:</span> 
+                    <input class="js-label" />
+                </div>
+                <div>
+                    <span>Color:</span> 
+                    <input class="js-color" /> 
+                </div>
+                <div>
+                    <span>Duration:</span>
+                    <select class="js-duration">
+                        <option value="0">Full</option>
+                        <option value="1">First Half</option>
+                        <option value="2">Second half</option>
+                    </select>
+                </div>
+            </div>
+            <div class="add-lesson-row border-bottom">
+                <button class="js-add-hour">Add hour</button>
+            </div>
+            <div class="js-hours">
+
+            </div>
+            <div>
+                <button class="js-convert">Convert</button>
+                <button class="js-clear">Clear</button>
+            </div>
+        </div>
+        <div class="col-2">
+            <pre class="js-result"></pre>
+        </div>
+        <div class="js-hour-template">
+            <div class="hour-container">
+                <div class="add-lesson-row">
+                    <div>
+                        <span>Day: </span>
+                        <select class="js-hour-day"></select>
+                    </div>
+
+                    <div>
+                        <span>Hour: </span>
+                        <select class="js-hour-time"></select>
+                    </div>
+                </div>
+                <div class="add-lesson-row">
+                    <div>
+                        <span>Place: </span>
+                        <select class="js-hour-place"></select>
+                    </div>
+
+                    <div>
+                        <span>Teacher: </span>
+                        <select class="js-hour-teacher"></select>
+                    </div>
+                    <div>
+                        <span>Group:</span> 
+                        <input class="js-hour-group" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="application/javascript" src="files/jquery.js"></script>
+        <script type="application/javascript" src="files/jquery-ui.min.js"></script>
+        <script type="application/javascript" src="files/lodash.js"></script>        
+        <script type="application/javascript" src="files/config.js"></script>  
+        <script type="application/javascript" src="files/add.js"></script>
+
+    </body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Games</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="author" content="Jakub Szczepaniak" />
+    </head>
+    <body style="background-color:green;width:100px;height:100px;">
+	Green
+		<!-- 
+		Tło "full screen" ustawione position:aboslute, działa dla wszystkich zwykłych elementów,
+		ale jeśli coś po drodze ma ustawione position inne niż static... to już się sypie.
+		Lepiej ustawić na absolute, albo nawet zmieniać za pomocą javascript...
+		-->
+        <div style="background-color:#00f;width:300px;height:100px;border:dotted 1px #88f">Blue</div>
+		
+		<div style="background-color:#fff;width:300px;height:100px;position:fixed;top:0;left:0">
+		White
+			<div style="background-color:black;width:100%;height:100%;position:fixed;opacity:0.5;top:0;left:0">Black</div>
+		</div>
+		
+        <div style="background-color:#f00;border:dotted 1px #f88;clear:both">Red</div>
+    </body>
+</html>

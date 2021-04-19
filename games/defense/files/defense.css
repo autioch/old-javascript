@@ -1,0 +1,5 @@
+.qbGameObject{position:absolute;left:0px;top:0px;border:0px;margin:0px;padding:0px;display:none;
+              user-select:none;-o-user-select:none;-moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none;}
+.qbBackground{background-color:#aaa;opacity:0.5;z-index:61;position:fixed;}
+.qbContainer{position:fixed;z-index:62;background-color:#afa;}
+.qbMessageScreen{background-color:#0e0;cursor:pointer;width:360px;z-index:92;padding:15px;}

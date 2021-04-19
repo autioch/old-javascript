@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dependency Injection tests</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            html{
+                font-size: 14px;                
+            }
+            body{
+                width: 960px;
+                margin: auto;
+                color: #333;
+                font-family: Verdana;
+            }
+            table{
+                border-collapse: collapse;                
+                width: 100%;
+            }
+            td{
+                border: solid 1px #999;
+                padding: 3px;
+            }
+            .js-times{
+                display: none;
+            }
+            .button{
+                font-size: 0.75em;
+                color: #666;
+                cursor: pointer;
+                padding-left: 0.5em;
+                line-height: 1.7em;
+            }
+            button.:hover{
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <button class="js-action">Action</button>
+        <button class="js-log">Log</button>
+        <span class="first"></span>
+        <span class="second"></span>
+        <span class="button js-toggle-all">Toggle all execution times</span>
+        <div id="result"></div>
+        <script type="application/javascript" src="jquery-2.1.1.js"></script>
+        <script type="application/javascript" src="lodash.js"></script>        
+        <script type="application/javascript" src="Recount.js"></script>        
+        <script type="application/x-template" id="recountTemplate">
+            <% _.each(objs, function(obj,objName){ %>
+            <h3><%= objName %></h3>
+            <table>
+                <% _.each(obj, function(func,funcName){ %>
+                    <tr> <td colspan="4"><%= funcName %><span class="button js-toggle">Toggle execution times</span></td> </tr>
+                    <tr class="js-times"> <td colspan="4"><%= func.sorted.join(', ') %></td> </tr>
+                    <tr> <td>Calls</td> <td>Fastest</td> <td>Slowest</td> <td>Average</td> </tr>
+                    <tr>
+                        <td><%= func.calls %></td>
+                        <td><%= func.fastest %>ms</td>
+                        <td><%= func.slowest %>ms</td>
+                        <td><%= func.average ? func.average.toFixed(2) : '' %>ms</td>
+                    </tr>
+                <% }) %>        
+            </table>    
+            <% }) %>
+        </script>
+        <script type="application/javascript">
+
+            //http://stackoverflow.com/questions/11756483/require-js-access-all-loaded-modules
+            function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds){
+            break;
+            }
+            }
+            }                  
+
+            var test = {
+
+            func: function(){
+            console.log('test.func called');
+            sleep(Math.random() * 100);
+            },
+
+            funcArg: function(selector){
+            console.log('test.funcArg called');
+            sleep(Math.random() * 10);
+            }
+
+            };
+
+            window.Recount.wrap(test,'test');
+
+            $('.js-action').on('click', function(){
+            test.func();
+            if (Math.random() > 0.6){
+            test.funcArg('second');
+            }
+            });
+
+            
+            var template = _.template($('#recountTemplate').html());
+            
+            $('.js-log').on('click', function(){
+                window.Recount.summarize();
+                $('#result').html(template({objs: window.Recount.objs}));
+            });
+            
+            $('.js-toggle-all').on('click', function(){
+                $('.js-times').show();
+            });
+            
+            $('#result').on('click', '.js-toggle',function(){
+                $(this).closest('tr').next().toggle();
+            });
+            
+            $('.js-action').click().click().click().click().click().click().click().click().click().click();
+            $('.js-log').click();
+
+        </script>
+    </body>
+</html>

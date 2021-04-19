@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Frontend</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            html,body,h1{margin:0;border:0;padding:0;}
+            html{font-size:13px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;background:#f8f8ff;color:#333}
+            @media screen and (min-width: 1680px){
+                html{font-size: 14px}
+            }
+            @media screen and (max-width: 1024px){
+                html{font-size: 12px}
+            }
+            ul{list-style-type:none}
+            h2{font-size:16px}
+            h3{font-size:14px}
+            .container{bottom:0;top:0em;position:fixed;overflow-x:hidden;overflow-y:scroll;padding:0 1em;box-sizing:border-box;}
+            #toc{left:0;width:20%}
+            a{text-decoration:none;color:#0645ad}
+            #content{right: 0;width: 80%;}
+            #content>div{margin-bottom:2em}
+        </style>
+    </head>
+    <body>
+        <script type="text/x-template" id="toc-item">
+            <div>
+                <h3><a href="#set-<%= set.link %>"><%= seti %>. <%= set.label %></a></h3>
+                <ul>
+                    <%  _.each(set.rules, function(rule,rulei){ %>
+                        <li><a href="#rule-<%= set.link %>-<%= rule.link %>"><%= seti %>.<%= rulei + 1 %>. <%= rule.label %></a></li>
+                    <% }) %>
+                </ul>
+            </div>   
+        </script>
+        <script type="text/x-template" id="content-item">
+            <div>
+                <h2 id="set-<%= set.link %>"><%= seti %>. <%= set.label %></h2>
+                <ul>
+                <%  _.each(set.rules, function(rule,rulei){ %>
+                    <li>
+                        <h3 id="rule-<%= set.link %>-<%= rule.link %>"><%= seti %>.<%= rulei + 1 %>. <%= rule.label %></h3>
+                        <div><%= rule.content.replace(/ %(.+?)% /g,' <a target="_blank" href="\$1">\$1</a>') %></div>
+                    </li>
+                <% }) %>
+                </ul>
+            </div>               
+        </script>
+        <script type="application/javascript" src="files/jquery.min.js"></script>
+        <script type="application/javascript" src="files/lodash.min.js"></script>
+        <script type="application/javascript" src="files/rules.js"></script>
+        <script type="application/javascript">
+            var $content = $('<div id="content" class="container"/>'), $toc = $('<div id="toc" class="container"/>'), 
+            tocTemplate = _.template($('#toc-item').html()), contentTemplate = _.template($('#content-item').html());
+            _.each(window.rules, function(set,index) { $toc.append(tocTemplate({set:set,seti:index + 1})); $content.append(contentTemplate({set:set,seti:index + 1})); });
+            $('body').append($content).append($toc);
+            $toc.on('click','a',function(ev){$('#content').stop().animate({'scrollTop':$($(ev.currentTarget).attr('href'))[0].offsetTop})});      
+            //getelement by id, get html from element, append
+        </script>
+    </body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <meta name="description" content="Points Calculator for World of Warcraft">		
+        <meta name="keywords" content="Calculator, World of Warcraft">	
+        <meta name="author" content="Jakub Szczepaniak">		
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">        
+        <link rel="shortcut icon" href="/favicon.ico">         
+        <title>Points Calculator</title>
+        <style type="text/css">
+            body{width:600px;margin:auto;font-family:Verdana,Arial;font-size:12px}
+            h4{text-align:center}
+            table{border-collapse:collapse;width:100%}
+            td{padding:3px;border:solid 1px #55d;border-collapse:collapse;text-align:center}
+            td.title{text-align:left}
+            td.checked{background-color:#8f8;}
+            th{padding: 2% 0}
+            p{text-align:center}
+            .diff-select{margin:0px;vertical-align:middle;margin-right:5px;}
+            span{display:inline-block;padding:1px}
+            .points{width:30px;border: solid 1px transparent;display:inline;padding:1px;text-align:center;background-color:transparent}
+            .diff{margin:0px;vertical-align:middle;display:inline;margin-right:5px;}
+            tbody>tr:hover{background-color:#aaf}
+            .points:hover{border:solid 1px #f88;background-color:#fdd}
+            .points:focus{border:solid 1px #f00;background-color:#fdd}
+            .notice{font-size:9px}
+            @media screen and (max-width:600px){
+                body{width:auto}
+                td{padding:1px;}
+                span{padding:0}
+                table{width:99%;margin:auto}
+                .diff{margin:5px auto;display:block}
+                .overall{padding:5px}
+                .notice{font-size:8px}
+            }
+        </style>
+    </head>
+    <body>
+        <h4>Points Calculator</h4>
+        <table id="boss-table">
+            <thead>
+                <tr>
+                    <th>Boss</th>
+                    <th><input type="radio" name="diff-selector" class="diff-select diff0"> 0</th>
+                    <th><input type="radio" name="diff-selector" class="diff-select diff1"> 10n</th>
+                    <th><input type="radio" name="diff-selector" class="diff-select diff2"> 10hc</th>
+                    <th><input type="radio" name="diff-selector" class="diff-select diff3"> 25n</th>
+                    <th><input type="radio" name="diff-selector" class="diff-select diff4"> 25hc</th>
+                </tr>
+            </thead>
+            <tbody id="bosses">
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="overall title">
+                        <strong>Difficulty total</strong>
+                    </td>
+                    <td id="total-diff0">0</td>
+                    <td id="total-diff1">0</td>
+                    <td id="total-diff2">0</td>
+                    <td id="total-diff3">0</td>
+                    <td id="total-diff4">0</td>
+                </tr>
+                <tr>
+                    <td class="overall title">
+                        <strong>Overall</strong>
+                    </td>
+                    <td colspan="5" id="result">0</td>
+                </tr>
+            </tfoot>
+        </table>
+        <p>Want your own calculator? <a href="mailto:autioch@gmail.com">Let me know</a>!</p>
+        <p class="notice">Cookies! This page saves settings on user's computer. By using
+            the script you agree to save them on your computer.</p>
+        <p class="notice">Copyright <a href="http://qb.net.pl">qb.net.pl</a></p>
+
+        <script type="text/javascript">
+            window.calc = window.calc || {};
+
+
+            function addEvent(evnt, elem, func) {
+                if (elem.addEventListener)  // W3C DOM
+                    elem.addEventListener(evnt, func, false);
+                else if (elem.attachEvent) { // IE DOM
+                    elem.attachEvent("on" + evnt, func);
+                }
+                else { // No much to do
+                    elem[evnt] = func;
+                }
+            }
+
+            function stopEvent(e) {
+
+                if (!e)
+                    var e = window.event;
+
+                //e.cancelBubble is supported by IE -
+                // this will kill the bubbling process.
+                //e.cancelBubble = true;
+                //e.returnValue = false;
+
+                //e.stopPropagation works only in Firefox.
+                if (e.stopPropagation)
+                    e.stopPropagation();
+                //if (e.preventDefault)
+                //    e.preventDefault();
+
+                //return false;
+            }
+
+            (function(q) {
+                "use strict";
+                var ui, bosses = [
+                    ['Lord Marrowgar', [20, 100, 40, 200]],
+                    ['Lady Deathwhisper', [20, 100, 40, 200]],
+                    ['Gunship Battle', [20, 100, 40, 200]],
+                    ['Deathbringer Saurfang', [20, 100, 40, 200]],
+                    ['Rotface', [20, 100, 40, 200]],
+                    ['Festergut', [20, 100, 40, 200]],
+                    ['Proffesor Putricide', [100, 200, 200, 400]],
+                    ['Bloodprince Council', [20, 100, 40, 200]],
+                    ['Blood Queen Lana\'thel', [20, 100, 40, 200]],
+                    ['Valithiria Dreamwalker', [20, 100, 40, 200]],
+                    ['Sindragosa', [100, 200, 200, 400]],
+                    ['Lich King', [150, 300, 300, 600]]
+                ];
+                function getElementsByClassName(node, classname) {
+                    if (node.getElementsByClassName) {
+                        return node.getElementsByClassName(classname);
+                    }
+
+                    return (function getElementsByClass(searchClass, node) {
+                        if (node === null) {
+                            node = document;
+                        }
+                        var classElements = [],
+                                els = node.getElementsByTagName("*"),
+                                elsLen = els.length,
+                                pattern = new RegExp("(^|\\s)" + searchClass + "(\\s|$)"), i, j;
+                        for (i = 0, j = 0; i < elsLen; i++) {
+                            if (pattern.test(els[i].className)) {
+                                classElements[j] = els[i];
+                                j++;
+                            }
+                        }
+                        return classElements;
+                    })(classname, node);
+                }
+
+                function initTable() {
+                    var i, diffs = document.getElementsByName('diff-selector'), l = diffs.length;
+                    for (i = 0; i < l; i++) {
+                        addEvent('click', diffs[i], selectColumn);
+                    }
+                }
+
+                function selectColumn(e) {
+                    var t = e.target || e.srcElement;
+                    var j, c = t.className, bi = getElementsByClassName(ui.encountersTableBody, c), l = bi.length;
+                    for (j = 0; j < l; j++) {
+                        if (bi[j].tagName.toLowerCase() === 'input') {
+                            bi[j].click();
+                        }
+                    }
+                }
+
+                function resetTable() {
+                    while (encountersTableBody.firstChild) {
+                        encountersTableBody.removeChild(encountersTableBody.firstChild);
+                    }
+                }
+
+                function addEncounters() {
+                    var l = bosses.length, row, cell, i, j, text, radio, input, boss, diff;
+                    for (i = 0; i < l; i++) {
+                        row = document.createElement('tr');
+                        cell = document.createElement('td');
+                        cell.className = 'title';
+                        cell.innerHTML = bosses[i][0];
+                        row.appendChild(cell);
+                        cell = document.createElement('td');
+                        radio = document.createElement('input');
+                        radio.setAttribute('type', 'radio');
+                        radio.setAttribute('name', 'boss' + i);
+                        radio.className = 'diff diff0';
+                        cell.appendChild(radio);
+                        text = document.createElement('span');
+                        text.innerHTML = '0';
+                        cell.appendChild(text);
+                        row.appendChild(cell);
+                        for (j = 0; j < 4; j++) {
+                            cell = document.createElement('td');
+                            radio = document.createElement('input');
+                            radio.setAttribute('type', 'radio');
+                            radio.setAttribute('name', 'boss' + i);
+                            radio.className = 'diff diff' + (j + 1);
+                            input = document.createElement('input');
+                            input.setAttribute('type', 'text');
+                            input.value = bosses[i][1][j];
+                            input.className = 'points';
+                            input.setAttribute('boss', i);
+                            input.setAttribute('diff', (j + 1));
+                            /* fix this */
+
+                            addEvent('keyup', input, function(e) {
+                                var t = e.target || e.srcElement;
+                                boss = t.getAttribute('boss');
+                                diff = t.getAttribute('diff') - 1;
+                                bosses[boss][1][diff] = this.value;
+                            });
+                            cell.appendChild(radio);
+                            cell.appendChild(input);
+                            row.appendChild(cell);
+                        }
+                        ui.encountersTableBody.appendChild(row);
+                    }
+                }
+
+                function calculate() {
+                    var v, i, total = 0, s = [0, 0, 0, 0, 0], a = getElementsByClassName(ui.encountersTableBody, 'diff'), l = a.length;
+                    for (i = 0; i < l; i++) {
+                        if (a[i].checked) {
+                            v = a[i].nextSibling;
+                            if (v && v.tagName.toLowerCase() === 'input') {
+                                s[v.getAttribute('diff')] += parseFloat(v.value);
+                            }
+                        }
+                    }
+                    for (i = 0; i < 5; i++) {
+                        document.getElementById('total-diff' + i).innerHTML = s[i];
+                        total += s[i];
+                    }
+                    ui.resultsLabel.innerHTML = total;
+                }
+
+                function selectCell(radio) {
+                    var i, b = radio.getAttribute('name'), c = document.getElementsByName(b);
+                    for (i = 0; i < c.length; i++) {
+                        c[i].parentNode.className = (c[i].checked) ? 'checked' : '';
+                    }
+                }
+
+                function initCalculations() {
+                    addEvent('click', ui.encountersTable, function(e) {
+                        var t = e.target || e.srcElement;
+                        if (t.tagName.toLowerCase() === 'input') {
+                            calculate();
+                            selectCell(t);
+                            stopEvent(e);
+                        }
+                    });
+
+                    addEvent('keyup', ui.encountersTable, function(e) {
+                        var t = e.target || e.srcElement;
+                        if (t.tagName.toLowerCase() === 'input') {
+                            calculate();
+                            stopEvent(e);
+                        }
+                        ;
+                    });
+                }
+
+                q.init = function() {
+                    ui = {
+                        encountersTable: document.getElementById('boss-table'),
+                        encountersTableBody: document.getElementById('bosses'),
+                        resultsLabel: document.getElementById('result')
+                    };
+                    initTable();
+                    addEncounters();
+                    initCalculations();
+                }
+                ;
+            }(window.calc));
+            addEvent('load', window, window.calc.init);
+        </script>        
+
+    </body>
+</html>

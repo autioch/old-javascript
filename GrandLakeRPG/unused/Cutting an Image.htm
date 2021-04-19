@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <title>html - Cutting an Image into pieces through Javascript - Stack Overflow</title>
+    <link rel="shortcut icon" href="http://cdn.sstatic.net/stackoverflow/img/favicon.ico?v=5bcec08ba0c5">
+    <link rel="apple-touch-icon image_src" href="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png?v=fd7230a85918">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="http://stackoverflow.com/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:domain" content="stackoverflow.com">
+    <meta name="og:type" content="website">
+    <meta name="og:image" content="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon@2.png?v=fde65a5a78c6">
+    <meta name="og:title" content="Cutting an Image into pieces through Javascript">
+    <meta name="og:description" content="I am creating a simple Jigsaw puzzle. In order to do this, I need to cut the picture I am using into 20 pieces. Is there a way in Javascript to cut a picture into 20 equal pieces and save them as 20 ">
+    <meta name="og:url" content="http://stackoverflow.com/questions/8912917/cutting-an-image-into-pieces-through-javascript">
+    <link rel="canonical" href="http://stackoverflow.com/questions/8912917/cutting-an-image-into-pieces-through-javascript">
+
+    
+    
+    <script src="Cutting%20an%20Image_pliki/quant.js" async=""></script><script src="Cutting%20an%20Image_pliki/beacon.js" async=""></script><script src="Cutting%20an%20Image_pliki/analytics.js" async=""></script><script src="Cutting%20an%20Image_pliki/ados.js" async="" type="text/javascript"></script><script src="Cutting%20an%20Image_pliki/jquery.js"></script>
+    <script src="Cutting%20an%20Image_pliki/stub.js"></script>
+    <link rel="stylesheet" type="text/css" href="Cutting%20an%20Image_pliki/all.css">
+    
+    <link rel="alternate" type="application/atom+xml" title="Feed for question 'Cutting an Image into pieces through Javascript'" href="http://stackoverflow.com/feeds/question/8912917">
+    <script>
+        
+        StackExchange.ready(function () {
+            StackExchange.using("postValidation", function () {
+                StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+            });
+
+            
+            StackExchange.question.init({showAnswerHelp:true,totalCommentCount:2,shownCommentCount:2,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:8912917});
+
+            styleCode();
+
+                StackExchange.realtime.subscribeToQuestion('1', '8912917');
+            
+                    });
+    </script>
+
+
+    <script>
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","serverTime":1394115393,"styleCode":true,"enableUserHovercards":true,"site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdchgIAAAAAAJwGpIzRQSOFaO0pU6s44Xt8aTwc","recaptchaAudioLang":"en","nonAsciiTags":true,"enableSocialMediaInSharePopup":true},"user":{"fkey":"3666ae4579e47d6ed41a7d73de49e275","isAnonymous":true,"ab":{"simplified_login_pages":{"v":"c","g":2},"welcome_email":{"v":"2","g":2}}}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"e0bbd4760e83","js/moderator.en.js":"64645144f0dd","js/full-anon.en.js":"c8f68864cc98","js/full.en.js":"62d97b77d54f","js/wmd.en.js":"9eff1dc444d0","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"3eb1042ba6b3","js/help.en.js":"d3cc74d8a93a","js/tageditor.en.js":"6d51a5f8d7f3","js/tageditornew.en.js":"5761dfb80bd0","js/inline-tag-editing.en.js":"f951bd09dc69","js/revisions.en.js":"33fd38144303","js/review.en.js":"58db669c3499","js/tagsuggestions.en.js":"e4e7b952fcc7","js/post-validation.en.js":"c275fe37d674","js/explore-qlist.en.js":"73825bd006fc","js/events.en.js":"38e15ed1ddd8"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+        
+    </script>
+    
+        <script>
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+<script src="Cutting%20an%20Image_pliki/full-anon.js" async=""></script><script src="Cutting%20an%20Image_pliki/post-validation.js" async=""></script><script src="Cutting%20an%20Image_pliki/prettify-full.js" async=""></script></head>
+<body class="question-page new-topbar">
+    <noscript><div id="noscript-padding"></div></noscript>
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+<div class="topbar">
+    <div class="topbar-wrapper">
+        
+        <div class="js-topbar-dialog-corral">
+
+
+<div class="topbar-dialog siteSwitcher-dialog dno">
+    <div class="header">
+        <h3><a href="http://stackoverflow.com/">current community</a></h3>
+    </div>
+    <div class="modal-content current-site-container">
+        <ul class="current-site">
+                <li>
+                        <div class="related-links">
+            <a href="http://chat.stackoverflow.com/" data-gps-track="site_switcher.click({ item_type:6 })">chat</a>
+                    <a href="http://blog.stackexchange.com/" data-gps-track="site_switcher.click({ item_type:7 })">blog</a>
+            </div>
+
+
+
+
+    <a href="http://stackoverflow.com/" class="current-site-link site-link js-gps-track" data-id="1" data-gps-track="
+        site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-stackoverflow" title="Stack Overflow"></div>
+        Stack Overflow
+    </a>
+
+                </li>
+                <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    
+
+
+
+    <a href="http://meta.stackoverflow.com/" class="site-link js-gps-track" data-id="4" data-gps-track="
+            site.switch({ target_site:4, item_type:3 }),
+        site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-stackoverflowmeta" title="Meta Stack Overflow"></div>
+        Meta Stack Overflow
+    </a>
+
+                </li>
+                            <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    <a class="site-link" href="http://careers.stackoverflow.com/" data-gps-track="site_switcher.click({ item_type:9 })">
+                        <div class="site-icon favicon favicon-careers" title="Stack Overflow Careers"></div>
+                        Careers 2.0
+                    </a>
+                </li>
+        </ul>
+    </div>
+    
+    <div class="header" id="your-communities-header">
+        <h3>
+your communities        </h3>
+            
+    </div>
+    <div class="modal-content" id="your-communities-section">
+            
+            <div class="call-to-login">
+                    <a href="https://stackoverflow.com/users/signup?returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f8912917%2fcutting-an-image-into-pieces-through-javascript" data-gps-track="site_switcher.click({ item_type:10 })">Sign up</a>
+                    or
+                    <a href="https://stackoverflow.com/users/login?returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f8912917%2fcutting-an-image-into-pieces-through-javascript" data-gps-track="site_switcher.click({ item_type:11 })">log in</a>
+                to customize your list.
+            </div>
+    </div>
+    
+    <div class="header">
+        <h3><a href="http://stackexchange.com/sites">more stack exchange communities</a></h3>
+    </div>
+    <div class="modal-content">
+            <div class="child-content"></div>
+    </div>
+</div>
+        </div>
+
+        <div class="network-items">
+            
+            <a href="http://stackexchange.com/" class="topbar-icon icon-site-switcher yes-hover js-site-switcher-button js-gps-track" data-gps-track="site_switcher.show" title="A list of all 117 Stack Exchange sites">
+                <span class="hidden-text">Stack Exchange</span>
+            </a>
+            
+        </div>
+
+        <div class="topbar-links">
+            
+                <div class="links-container">
+                    <span class="topbar-menu-links">
+                            <a href="https://stackoverflow.com/users/signup?returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f8912917%2fcutting-an-image-into-pieces-through-javascript" class="login-link">sign up</a>
+                            <a href="https://stackoverflow.com/users/login?returnurl=http%3a%2f%2fstackoverflow.com%2fquestions%2f8912917%2fcutting-an-image-into-pieces-through-javascript" class="login-link">log in</a>
+                        <a href="http://stackoverflow.com/tour">tour</a>
+                            <a href="#" class="icon-help js-help-button" title="Help Center and other resources">
+        help
+        <span class="triangle"></span>
+    </a>
+    <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                <li>
+                    <a href="http://stackoverflow.com/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                        Tour
+                        <span class="item-summary">
+                            Start here for a quick overview of the site
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://stackoverflow.com/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                    <li>
+                        <a href="http://meta.stackoverflow.com/" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                            Meta
+                            <span class="item-summary">
+                                Discuss the workings and policies of this site
+                            </span>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+
+                            <a href="http://careers.stackoverflow.com/">careers 2.0</a>
+                    </span>
+                </div>
+
+			<div class="search-container">
+                <form id="search" action="/search" method="get" autocomplete="off">
+                    <input name="q" placeholder="search" tabindex="1" autocomplete="off" maxlength="240" type="text">
+                </form>
+			</div>
+            	
+        </div>      
+    </div> 
+</div>
+<script>
+    StackExchange.ready(function () {
+        //topbar.init();
+        StackExchange.topbar.init();
+    });
+</script>
+    <div class="container">
+        <div id="header" class="headeranon">
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="http://stackoverflow.com/">
+                    Stack Overflow
+                </a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs mainnavsanon">
+                    <ul>
+                            <li class="youarehere"><a id="nav-questions" href="http://stackoverflow.com/questions">Questions</a></li>
+                            <li><a id="nav-tags" href="http://stackoverflow.com/tags">Tags</a></li>
+                            <li><a id="nav-tour" href="http://stackoverflow.com/about">Tour</a></li>
+                            <li><a id="nav-users" href="http://stackoverflow.com/users">Users</a></li>
+                    </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion" href="http://stackoverflow.com/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <div id="content">
+            
+
+<div itemscope="" itemtype="http://schema.org/Article">
+	<link itemprop="image" href="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png">
+			<!--googleoff: all-->
+<div id="herobox-mini">
+    <div id="hero-content">
+        <span id="controls">
+            <a href="http://stackoverflow.com/about" id="tell-me-more" class="button">Take the 2-minute tour</a>
+            <span id="close"><a title="click to dismiss">×</a></span>
+        </span>
+        <div id="blurb">
+            Stack Overflow is a question and answer site for 
+professional and enthusiast programmers. It's 100% free, no registration
+ required.
+        </div>        
+    </div>
+    <script>
+        $('#tell-me-more').click(function () {
+            var clickSource = $("body").attr("class") + '-mini';
+            if ($("body").hasClass("questions-page")) {
+                clickSource = 'questionpagemini';
+            } else if ($("body").hasClass("question-page")) {
+                clickSource = 'questionpagemini';
+            } else if ($("body").hasClass("home-page")) {
+                clickSource = 'homepagemini';
+            }
+
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("aboutpage.click", { aboutclick_location: clickSource } , true);
+            });
+        });
+        $('#herobox-mini #close').click(function () {
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("hero.action", { hero_action_type: "close" }, true);
+            });
+            $.cookie("hero", "none", { path: "/" });
+            var $hero = $("#herobox-mini");
+            $hero.slideUp('fast', function () { $hero.remove(); });
+            return false;
+        });
+    </script>
+</div>
+			<!--googleon: all-->
+			<div id="question-header">
+			<h1 itemprop="name"><a href="http://stackoverflow.com/questions/8912917/cutting-an-image-into-pieces-through-javascript" class="question-hyperlink">Cutting an Image into pieces through Javascript</a></h1>
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question" data-questionid="8912917" id="question">
+    
+    <script>
+                var ados = ados || {};ados.run = ados.run || [];
+                ados.run.push(function() { ados_add_placement(22,8277,"adzerk1924064671",4).setZone(43) ; });                    
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk1924064671">
+            </div>    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input name="_id_" value="8912917" type="hidden">
+    <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+    <span class="vote-count-post ">4</span>
+    <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+    
+    <a class="star-off" href="#" title="This is a favorite question (click again to undo)">favorite</a>
+    <div class="favoritecount"><b>3</b></div>   
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="description">
+
+        <p>I am creating a simple Jigsaw puzzle. In order to do this, I 
+need to cut the picture I am using into 20 pieces. Is there a way in 
+Javascript to cut a picture into 20 equal pieces and save them as 20 
+different objects within the webpage? Or do I just have to go into 
+photoshop and cut each picture out myself and call it in?</p>
+
+    </div>
+    <div class="post-taglist">
+        <a href="http://stackoverflow.com/questions/tagged/javascript" class="post-tag js-gps-track" title="" rel="tag">javascript</a> <a href="http://stackoverflow.com/questions/tagged/html" class="post-tag js-gps-track" title="" rel="tag">html</a> <a href="http://stackoverflow.com/questions/tagged/html5" class="post-tag js-gps-track" title="" rel="tag">html5</a> 
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/q/8912917" title="short permalink to this question" class="short-link" id="link-post-8912917">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/8912917/edit" class="suggest-edit-post" title="">improve this question</a></div>        
+    </td>
+    <td class="post-signature owner">
+        <div class="user-info ">
+    <div class="user-action-time">
+        asked <span title="2012-01-18 15:39:02Z" class="relativetime">Jan 18 '12 at 15:39</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/780198/theches44"><div><img src="Cutting%20an%20Image_pliki/fec4d7e9f787c3a2bcb8607e621480f0.png" alt="" height="32" width="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/780198/theches44">TheChes44</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">205</span><span title="5 silver badges"><span class="badge2"></span><span class="badgecount">5</span></span><span title="15 bronze badges"><span class="badge3"></span><span class="badgecount">15</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</div>
+</td>
+        </tr>
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-8912917" class="comments" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+
+    <tr id="comment-11148965" class="comment">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">A canvas element would let you "cut out" 
+pieces, but exactly how to do it would depend on your exact requirements
+ around what you want to <i>do</i> with the pieces.</span>
+	–&nbsp;
+		<a href="http://stackoverflow.com/users/182668/pointy" title="158241 reputation" class="comment-user">Pointy</a>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="#comment11148965_8912917"><span title="2012-01-18 15:42:27Z" class="relativetime-clean">Jan 18 '12 at 15:42</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+    <tr id="comment-11149055" class="comment">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">I want the pieces to be able to be draggable
+ and droppable. I am currently using Jquery for this task, but as this 
+feature is not supported, and the third party add-ons aren't working, I 
+am shirking away from using Jquery. I might change over to HTML5 if it 
+can drag and drop. Anyways,  I basically want  20 different images that I
+ can drag and drop onto a frame so they can "solve" the puzzle.</span>
+	–&nbsp;
+		<a href="http://stackoverflow.com/users/780198/theches44" title="205 reputation" class="comment-user owner">TheChes44</a>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="#comment11149055_8912917"><span title="2012-01-18 15:45:55Z" class="relativetime-clean">Jan 18 '12 at 15:45</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-8912917" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments.">add comment</a>
+    </td>
+</tr>            </tbody></table>    
+</div>
+
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								3 Answers
+						</h2>
+						<div>
+							<div id="tabs">
+        <a href="http://stackoverflow.com/questions/8912917/cutting-an-image-into-pieces-through-javascript?answertab=active#tab-top" title="Answers with the latest activity first">active</a>
+        <a href="http://stackoverflow.com/questions/8912917/cutting-an-image-into-pieces-through-javascript?answertab=oldest#tab-top" title="Answers in the order they were provided">oldest</a>
+        <a class="youarehere" href="http://stackoverflow.com/questions/8912917/cutting-an-image-into-pieces-through-javascript?answertab=votes#tab-top" title="Answers with the highest score first">votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+
+
+  
+<a name="8912970"></a>
+<div id="answer-8912970" class="answer accepted-answer" data-answerid="8912970">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input name="_id_" value="8912970" type="hidden">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">5</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+        <span class="vote-accepted-on load-accepted-answer-date" title="loading when this answer was accepted...">accepted</span>
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text">
+            <p>You can do this by setting the image as a background on a
+ div, then setting its background-position. This is basically the same 
+as using <a href="http://www.alistapart.com/articles/sprites" rel="nofollow">CSS Sprites</a>.</p>
+
+<p>(assume pieces are 100 x 100px)</p>
+
+<pre style="" class="default prettyprint prettyprinted"><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"puzzle piece1"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"puzzle piece2"</span><span class="tag">&gt;&lt;/div&gt;</span></code></pre>
+
+<p>CSS:</p>
+
+<pre style="" class="default prettyprint prettyprinted"><code><span class="pun">.</span><span class="pln">puzzle </span><span class="pun">{</span><span class="pln">
+   background</span><span class="pun">-</span><span class="pln">image</span><span class="pun">:</span><span class="pln">url</span><span class="pun">(</span><span class="str">/images/</span><span class="pln">puzzle</span><span class="pun">.</span><span class="pln">jpg</span><span class="pun">);</span><span class="pln">
+   width</span><span class="pun">:</span><span class="lit">100px</span><span class="pun">;</span><span class="pln">
+   height</span><span class="pun">:</span><span class="lit">100px</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">piece1 </span><span class="pun">{</span><span class="pln">
+   background</span><span class="pun">-</span><span class="pln">position</span><span class="pun">:</span><span class="lit">0</span><span class="pln"> </span><span class="lit">0</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">piece2 </span><span class="pun">{</span><span class="pln">
+   background</span><span class="pun">-</span><span class="pln">position</span><span class="pun">:-</span><span class="lit">100px</span><span class="pln"> </span><span class="pun">-</span><span class="lit">100px</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/8912970" title="short permalink to this answer" class="short-link" id="link-post-8912970">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/8912970/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td class="post-signature" align="right">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/8912970/revisions" title="show all edits to this post">edited <span title="2012-01-18 15:56:10Z" class="relativetime">Jan 18 '12 at 15:56</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td class="post-signature" align="right">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2012-01-18 15:43:14Z" class="relativetime">Jan 18 '12 at 15:43</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/12579/diodeus"><div><img src="Cutting%20an%20Image_pliki/969b153010f69ec07458fa1d9e8a413b.jpg" alt="" height="32" width="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/12579/diodeus">Diodeus</a><br>
+        <span class="reputation-score" title="reputation score 63191" dir="ltr">63.2k</span><span title="17 gold badges"><span class="badge1"></span><span class="badgecount">17</span></span><span title="71 silver badges"><span class="badge2"></span><span class="badgecount">71</span></span><span title="105 bronze badges"><span class="badge3"></span><span class="badgecount">105</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-8912970" class="comments" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+
+    <tr id="comment-11149097" class="comment">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">now can I do that with div IDs as well?</span>
+	–&nbsp;
+		<a href="http://stackoverflow.com/users/780198/theches44" title="205 reputation" class="comment-user owner">TheChes44</a>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="#comment11149097_8912970"><span title="2012-01-18 15:47:33Z" class="relativetime-clean">Jan 18 '12 at 15:47</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+    <tr id="comment-11149112" class="comment">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">Sure, same thing.</span>
+	–&nbsp;
+		<a href="http://stackoverflow.com/users/12579/diodeus" title="63191 reputation" class="comment-user">Diodeus</a>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="#comment11149112_8912970"><span title="2012-01-18 15:48:12Z" class="relativetime-clean">Jan 18 '12 at 15:48</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-8912970" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+<script>
+                var ados = ados || {};ados.run = ados.run || [];
+                ados.run.push(function() { ados_add_placement(22,8277,"adzerk1231334800",4).setZone(44) ; });                    
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk1231334800">
+            </div>
+  
+<a name="8913024"></a>
+<div id="answer-8913024" class="answer" data-answerid="8913024">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input name="_id_" value="8913024" type="hidden">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">7</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text">
+            <p>This is easy to do with Canvas. The general idea is:</p>
+
+<pre style="" class="default prettyprint prettyprinted"><code><span class="kwd">var</span><span class="pln"> image </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Image</span><span class="pun">();</span><span class="pln">
+image</span><span class="pun">.</span><span class="pln">onload </span><span class="pun">=</span><span class="pln"> cutImageUp</span><span class="pun">;</span><span class="pln">
+image</span><span class="pun">.</span><span class="pln">src </span><span class="pun">=</span><span class="pln"> </span><span class="str">'myimage.png'</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">function</span><span class="pln"> cutImageUp</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> imagePieces </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[];</span><span class="pln">
+    </span><span class="kwd">for</span><span class="pun">(</span><span class="kwd">var</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> x </span><span class="pun">&lt;</span><span class="pln"> numColsToCut</span><span class="pun">;</span><span class="pln"> </span><span class="pun">++</span><span class="pln">x</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">for</span><span class="pun">(</span><span class="kwd">var</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> y </span><span class="pun">&lt;</span><span class="pln"> numRowsToCut</span><span class="pun">;</span><span class="pln"> </span><span class="pun">++</span><span class="pln">y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="kwd">var</span><span class="pln"> canvas </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="str">'canvas'</span><span class="pun">);</span><span class="pln">
+            canvas</span><span class="pun">.</span><span class="pln">width </span><span class="pun">=</span><span class="pln"> widthOfOnePiece</span><span class="pun">;</span><span class="pln">
+            canvas</span><span class="pun">.</span><span class="pln">height </span><span class="pun">=</span><span class="pln"> heightOfOnePiece</span><span class="pun">;</span><span class="pln">
+            </span><span class="kwd">var</span><span class="pln"> context </span><span class="pun">=</span><span class="pln"> canvas</span><span class="pun">.</span><span class="pln">getContext</span><span class="pun">(</span><span class="str">'2d'</span><span class="pun">);</span><span class="pln">
+            context</span><span class="pun">.</span><span class="pln">drawImage</span><span class="pun">(</span><span class="pln">image</span><span class="pun">,</span><span class="pln"> x </span><span class="pun">*</span><span class="pln"> widthOfOnePiece</span><span class="pun">,</span><span class="pln"> y </span><span class="pun">*</span><span class="pln"> heightOfOnePiece</span><span class="pun">,</span><span class="pln"> widthOfOnePiece</span><span class="pun">,</span><span class="pln"> heightOfOnePiece</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> canvas</span><span class="pun">.</span><span class="pln">width</span><span class="pun">,</span><span class="pln"> canvas</span><span class="pun">.</span><span class="pln">height</span><span class="pun">);</span><span class="pln">
+            imagePieces</span><span class="pun">.</span><span class="pln">push</span><span class="pun">(</span><span class="pln">canvas</span><span class="pun">.</span><span class="pln">toDataURL</span><span class="pun">());</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="com">// imagePieces now contains data urls of all the pieces of the image</span><span class="pln">
+
+    </span><span class="com">// load one piece onto the page</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> anImageElement </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">'myImageElementInTheDom'</span><span class="pun">);</span><span class="pln">
+    anImageElement</span><span class="pun">.</span><span class="pln">src </span><span class="pun">=</span><span class="pln"> imagePieces</span><span class="pun">[</span><span class="lit">0</span><span class="pun">];</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/8913024" title="short permalink to this answer" class="short-link" id="link-post-8913024">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/8913024/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td class="post-signature" align="right">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/8913024/revisions" title="show all edits to this post">edited <span title="2013-07-22 14:41:28Z" class="relativetime">Jul 22 '13 at 14:41</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td class="post-signature" align="right">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2012-01-18 15:46:25Z" class="relativetime">Jan 18 '12 at 15:46</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/194940/matt-greer"><div><img src="Cutting%20an%20Image_pliki/f8fbc5df2432deac7557cf5e111439f2.png" alt="" height="32" width="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/194940/matt-greer">Matt Greer</a><br>
+        <span class="reputation-score" title="reputation score 26791" dir="ltr">26.8k</span><span title="5 gold badges"><span class="badge1"></span><span class="badgecount">5</span></span><span title="62 silver badges"><span class="badge2"></span><span class="badgecount">62</span></span><span title="80 bronze badges"><span class="badge3"></span><span class="badgecount">80</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-8913024" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-8913024" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="14258397"></a>
+<div id="answer-14258397" class="answer" data-answerid="14258397">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input name="_id_" value="14258397" type="hidden">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">0</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text">
+            <p>you can use the drawImage method to slice parts of a source image and draw them to a canvas:</p>
+
+<pre style="" class="default prettyprint prettyprinted"><code><span class="pln">drawImage</span><span class="pun">(</span><span class="pln">image</span><span class="pun">,</span><span class="pln"> sx</span><span class="pun">,</span><span class="pln"> sy</span><span class="pun">,</span><span class="pln"> sWidth</span><span class="pun">,</span><span class="pln"> sHeight</span><span class="pun">,</span><span class="pln"> dx</span><span class="pun">,</span><span class="pln"> dy</span><span class="pun">,</span><span class="pln"> dWidth</span><span class="pun">,</span><span class="pln"> dHeight</span><span class="pun">)</span><span class="pln"> </span></code></pre>
+
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial/Using_images" rel="nofollow">https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial/Using_images</a></p>
+
+<p>something like :</p>
+
+<pre style="" class="default prettyprint prettyprinted"><code><span class="pln">  document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">"vangogh"</span><span class="pun">).</span><span class="pln">onclick</span><span class="pun">=</span><span class="kwd">function</span><span class="pun">()</span><span class="pln">
+    </span><span class="pun">{</span><span class="pln">
+    draw</span><span class="pun">();</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln"> 
+
+ </span><span class="kwd">function</span><span class="pln"> draw</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> ctx </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">'canvas'</span><span class="pun">).</span><span class="pln">getContext</span><span class="pun">(</span><span class="str">'2d'</span><span class="pun">);</span><span class="pln">
+    ctx</span><span class="pun">.</span><span class="pln">drawImage</span><span class="pun">(</span><span class="pln">document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">'source'</span><span class="pun">),</span><span class="lit">33</span><span class="pun">,</span><span class="lit">45</span><span class="pun">);</span><span class="pln">
+                 </span><span class="pun">}</span></code></pre>
+
+<p>then create draggable content for your new entities :</p>
+
+<pre style="" class="default prettyprint prettyprinted"><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"columns"</span><span class="tag">&gt;</span><span class="pln">
+   </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"column"</span><span class="pln"> </span><span class="atn">draggable</span><span class="pun">=</span><span class="atv">"true"</span><span class="tag">&gt;&lt;header&gt;</span><span class="pln">A</span><span class="tag">&lt;/header&gt;&lt;/div&gt;</span><span class="pln">
+   </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"column"</span><span class="pln"> </span><span class="atn">draggable</span><span class="pun">=</span><span class="atv">"true"</span><span class="tag">&gt;&lt;header&gt;</span><span class="pln">B</span><span class="tag">&lt;/header&gt;&lt;/div&gt;</span><span class="pln">
+   </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"column"</span><span class="pln"> </span><span class="atn">draggable</span><span class="pun">=</span><span class="atv">"true"</span><span class="tag">&gt;&lt;header&gt;</span><span class="pln">C</span><span class="tag">&lt;/header&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+
+<p><a href="http://www.html5rocks.com/en/tutorials/dnd/basics/" rel="nofollow">http://www.html5rocks.com/en/tutorials/dnd/basics/</a></p>
+
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/14258397" title="short permalink to this answer" class="short-link" id="link-post-14258397">share</a><span class="lsep">|</span><a href="http://stackoverflow.com/posts/14258397/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td class="post-signature" align="right">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/14258397/revisions" title="show all edits to this post">edited <span title="2014-02-28 17:40:22Z" class="relativetime">Feb 28 at 17:40</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/491687/wesley-bland"><div><img src="Cutting%20an%20Image_pliki/2174f845b769ea2ad2242047f3118128.jpg" alt="" height="32" width="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/491687/wesley-bland">Wesley Bland</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">2,371</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="10 silver badges"><span class="badge2"></span><span class="badgecount">10</span></span><span title="25 bronze badges"><span class="badge3"></span><span class="badgecount">25</span></span>
+    </div>
+</div>    </td>
+            
+
+
+    <td class="post-signature" align="right">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2013-01-10 12:53:00Z" class="relativetime">Jan 10 '13 at 12:53</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="http://stackoverflow.com/users/1412620/matoeil"><div><img src="Cutting%20an%20Image_pliki/e7826fb5bfe55e74238870070cc35918.jpg" alt="" height="32" width="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="http://stackoverflow.com/users/1412620/matoeil">Matoeil</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">620</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="7 silver badges"><span class="badge2"></span><span class="badgecount">7</span></span><span title="24 bronze badges"><span class="badge3"></span><span class="badgecount">24</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-14258397" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-14258397" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+									<a name="new-answer"></a>
+						<form id="post-form" action="/questions/8912917/answer/submit" method="post" class="post-form">
+							<input id="post-id" value="8912917" type="hidden">
+							<h2 class="space">Your Answer</h2>
+
+
+
+    
+
+<script>
+    StackExchange.ready(function() {
+        initTagRenderer("".split(" "), "".split(" "));
+         
+        prepareEditor({
+            heartbeatType: 'answer',
+            bindNavPrevention: true,
+            postfix: "",
+            onDemand: true,
+            discardSelector: ".discard-answer"
+            ,immediatelyShowMarkdownHelp:true
+        });
+        
+
+    });  
+</script>
+
+
+<div id="post-editor" class="post-editor">
+
+    <div style="position: relative;">     
+        <div class="wmd-container">
+            <div id="wmd-button-bar" class="wmd-button-bar"><ul id="wmd-button-row" class="wmd-button-row"><li style="left: 0px;" class="wmd-button" id="wmd-bold-button"><span style="background-position: 0px -20px;"></span></li><li style="left: 25px;" class="wmd-button" id="wmd-italic-button"><span style="background-position: -20px -20px;"></span></li><li style="left: 50px;" class="wmd-spacer" id="wmd-spacer1"><span style="background-position: -40px -20px;"></span></li><li style="left: 75px;" class="wmd-button" id="wmd-link-button"><span style="background-position: -40px -20px;"></span></li><li style="left: 100px;" class="wmd-button" id="wmd-quote-button"><span style="background-position: -60px -20px;"></span></li><li style="left: 125px;" class="wmd-button" id="wmd-code-button"><span style="background-position: -80px -20px;"></span></li><li style="left: 150px;" class="wmd-button" id="wmd-image-button"><span style="background-position: -100px -20px;"></span></li><li style="left: 175px;" class="wmd-spacer" id="wmd-spacer2"><span style="background-position: -120px -20px;"></span></li><li style="left: 200px;" class="wmd-button" id="wmd-olist-button"><span style="background-position: -120px -20px;"></span></li><li style="left: 225px;" class="wmd-button" id="wmd-ulist-button"><span style="background-position: -140px -20px;"></span></li><li style="left: 250px;" class="wmd-button" id="wmd-heading-button"><span style="background-position: -160px -20px;"></span></li><li style="left: 275px;" class="wmd-button" id="wmd-hr-button"><span style="background-position: -180px -20px;"></span></li><li style="left: 300px;" class="wmd-spacer" id="wmd-spacer3"><span style="background-position: -200px -20px;"></span></li><li style="left: 325px;" class="wmd-button" id="wmd-undo-button"><span style="background-position: -200px -20px;"></span></li><li style="left: 350px;" class="wmd-button" id="wmd-redo-button"><span style="background-position: -220px -20px;"></span></li></ul></div>
+            <textarea id="wmd-input" class="wmd-input" name="post-text" cols="92" rows="15" tabindex="101" data-min-length=""></textarea>
+        </div>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+    <div id="draft-discarded" class="draft-discarded community-option fl" style="margin-top: 8px; height:24px; display:none;">draft discarded</div>
+
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" value="3666ae4579e47d6ed41a7d73de49e275" type="hidden">
+        <input id="author" name="author" type="text">
+    </div>
+</div>
+							<div style="position: relative;">
+								
+            <div class="form-item new-post-login">
+        
+                <div class="new-login-form">
+                    <div class="new-login-left">
+                        <h3>Sign up or <a id="login-link" href="http://stackoverflow.com/users/login?returnurl=%2fquestions%2f8912917%2fcutting-an-image-into-pieces-through-javascript%23new-answer">log in</a></h3>
+                        <script>
+                            StackExchange.ready(function () {
+                                StackExchange.helpers.onClickDraftSave('#login-link');
+                            });
+                        </script>
+                        <div class="preferred-login google-login">
+                            <p><span class="icon"></span><span>Sign up using Google</span></p>
+                        </div>
+                        <div class="preferred-login facebook-login">
+                            <p><span class="icon"></span><span>Sign up using Facebook</span></p>
+                        </div>
+                        <div class="preferred-login stackexchange-login">
+                            <p><span class="icon"></span><span>Sign up using Stack Exchange</span></p>
+                        </div>
+                    </div>
+                    <input name="manual-openid" class="manual-openid" type="hidden">
+                    <input name="use-facebook" class="use-facebook" value="false" type="hidden">
+                    <input class="submit-openid" value="Submit" style="display:none" type="button">
+                    <div class="new-login-right">
+                                <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tbody><tr>
+                    <script>
+                StackExchange.ready(function () {
+                    StackExchange.helpers.bindHelpOverlayEvents($('.vm input'));
+                });
+            </script>
+            <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" size="30" maxlength="30" tabindex="105" type="text">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" size="30" maxlength="100" tabindex="106" type="text">
+                    <span class="edit-field-overlay">required, but not shown</span>
+                </div>
+            </td>
+        </tr>
+        </tbody></table>
+    </div>
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                StackExchange.ready(
+                    function () {
+                        StackExchange.openid.initPostLogin('.new-post-login', '%2fquestions%2f8912917%2fcutting-an-image-into-pieces-through-javascript%23new-answer');
+                    }
+                );
+            </script>
+            <noscript>
+                        <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tr>
+                    <script>
+                StackExchange.ready(function () {
+                    StackExchange.helpers.bindHelpOverlayEvents($('.vm input'));
+                });
+            </script>
+            <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="text" size="30" maxlength="100" value="" tabindex="106">
+                    <span class="edit-field-overlay">required, but not shown</span>
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+            </noscript>
+							</div>
+           
+															<div class="form-submit cbt">
+									<input id="submit-button" value="Post Your Answer" tabindex="110" type="submit">
+									<a href="#" class="discard-answer dno">discard</a>
+
+<p class="privacy-policy-agreement">
+By posting your answer, you agree to the <a href="http://stackexchange.com/legal/privacy-policy" target="_blank">privacy policy</a> and <a href="http://stackexchange.com/legal/terms-of-service" target="_blank">terms of service</a>.</p>
+<input name="legalLinksShown" value="1" type="hidden">								</div>
+						</form>
+
+
+
+						<h2 class="bottom-notice">
+Not the answer you're looking for?							Browse other questions tagged <a href="http://stackoverflow.com/questions/tagged/javascript" class="post-tag" title="show questions tagged 'javascript'" rel="tag">javascript</a> <a href="http://stackoverflow.com/questions/tagged/html" class="post-tag" title="show questions tagged 'html'" rel="tag">html</a> <a href="http://stackoverflow.com/questions/tagged/html5" class="post-tag" title="show questions tagged 'html5'" rel="tag">html5</a>  or <a href="http://stackoverflow.com/questions/ask">ask your own question</a>.						</h2>
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+						    <div class="module question-stats">
+			        <table id="qinfo">
+			            <tbody><tr>
+			                <td>
+			                    <p class="label-key">asked</p>
+			                </td>
+			                <td style="padding-left: 10px">
+			                    <p class="label-key" title="2012-01-18 15:39:02Z"><b>2 years ago</b></p>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <p class="label-key">viewed</p>
+			                </td>
+
+			                <td style="padding-left: 10px">
+			                    <p class="label-key">
+			                        <b>4167 times</b>
+			                    </p>
+			                </td>
+			            </tr>
+			                <tr>
+			                    <td>
+			                        <p class="label-key">active</p>
+			                    </td>
+			                    <td style="padding-left: 10px">
+			                        <p class="label-key"><b><a href="http://stackoverflow.com/questions/8912917/cutting-an-image-into-pieces-through-javascript?lastactivity" class="lastactivity-link" title="2014-02-28 17:40:22Z">5 days ago</a></b></p>
+			                    </td>
+			                </tr>
+			        </tbody></table>
+			    </div>
+			<div class="module community-bulletin" data-tracker="cb=1">
+    <h4>Community Bulletin</h4>
+    <div class="related">
+
+            <div class="spacer">
+                <div class="bulletin-item-type"><a href="http://blog.stackoverflow.com/?cb=1" class="event-date" target="_blank">blog</a></div>
+                <div class="bulletin-item-content">
+                    <a href="http://blog.stackoverflow.com/2014/03/your-communities-list-is-now-customizable/?cb=1" class="question-hyperlink" target="_blank">Your communities list is now customizable</a>
+                </div>
+                <br class="cbt">
+            </div>
+    </div>
+</div>			
+			<script>
+                var ados = ados || {};ados.run = ados.run || [];
+                ados.run.push(function() { ados_add_placement(22,8277,"adzerk1997084464",17).setZone(45) ; });                    
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk1997084464">
+            </div>  
+    <div id="hireme">
+        <script>
+window.careers_adurl="//careers.stackoverflow.com/gethired/js",window.careers_cssurl="//cdn-careers.sstatic.net/careers/gethired/sidebar.min.css?v=ed74a1a226c6",window.careers_leaderboardcssurl="//cdn-careers.sstatic.net/careers/gethired/ninja.min.css?v=f0774d5c89a6",window.careers_companycssurl="//cdn-careers.sstatic.net/careers/gethired/company",window.careers_adselector="div.hireme, div#hireme",StackExchange.ready(function(){$.ajax({url:"//cdn-careers.sstatic.net/careers/gethired/loader.min.js?v=2a25cd589f27",dataType:"script",cache:!0})});        </script>
+    </div>
+			  
+    
+            <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	<div class="linked" data-tracker="lq=1">
+<div class="spacer">
+	<a href="http://stackoverflow.com/q/18135459?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">0</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/18135459/how-to-uncover-an-image-with-css-and-jquery?lq=1" class="question-hyperlink">How to uncover an image with css and jQuery</a>
+</div>			</div>
+</div>
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/111102?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted extra-large">2488
+    </div>
+</a><a href="http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?rq=1" class="question-hyperlink">How do JavaScript closures work?</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/134845?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes extra-large">1535
+    </div>
+</a><a href="http://stackoverflow.com/questions/134845/href-attribute-for-javascript-links-or-javascriptvoid0?rq=1" class="question-hyperlink">Href attribute for JavaScript links: “#” or “javascript:void(0)”?</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/1933969?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted large">175
+    </div>
+</a><a href="http://stackoverflow.com/questions/1933969/sound-effects-in-javascript-html5?rq=1" class="question-hyperlink">Sound effects in JavaScript / HTML5</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/7071733?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">2
+    </div>
+</a><a href="http://stackoverflow.com/questions/7071733/mask-an-image-using-image-map-or-canvas?rq=1" class="question-hyperlink">Mask an image using image map or canvas?</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/11187214?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/11187214/cutting-image-in-smaller-pieces-python-or-javascript?rq=1" class="question-hyperlink">Cutting image in smaller pieces Python or JavaScript</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/16461947?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">1
+    </div>
+</a><a href="http://stackoverflow.com/questions/16461947/javascript-cookie-not-writing-based-on-url-attributes?rq=1" class="question-hyperlink">JavaScript Cookie not writing based on URL Attributes</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/18477706?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">1
+    </div>
+</a><a href="http://stackoverflow.com/questions/18477706/javascript-function-is-undefined?rq=1" class="question-hyperlink">Javascript function is undefined</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/18583051?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/18583051/changing-opacity-of-div-with-javascript-timer?rq=1" class="question-hyperlink">Changing Opacity of Div With javascript timer</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/20297032?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">21
+    </div>
+</a><a href="http://stackoverflow.com/questions/20297032/how-to-build-a-preview-image-by-stacking-transparent-images-based-on-form-select?rq=1" class="question-hyperlink">How to build a Preview image by stacking transparent images based on Form selections using JavaScript?</a>
+</div>
+<div class="spacer js-gps-track">
+<a href="http://stackoverflow.com/q/21664174?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="http://stackoverflow.com/questions/21664174/how-to-account-for-user-entered-typos-in-a-javascript-prompt?rq=1" class="question-hyperlink">How to account for user-entered typos in a JavaScript prompt?</a>
+</div>
+
+                    </div>
+				</div>
+            
+<div id="hot-network-questions" class="module">
+    <h4>
+        <a href="http://stackexchange.com/questions?tab=hot" class="js-gps-track" data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li>
+                <div class="favicon favicon-security" title="Information Security Stack Exchange"></div><a href="http://security.stackexchange.com/questions/52361/is-adblock-plus-a-security-risk" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:162 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is Adblock (Plus) a security risk?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-sharepoint" title="SharePoint Stack Exchange"></div><a href="http://sharepoint.stackexchange.com/questions/92315/under-what-permission-does-workflow-run" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:232 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Under what permission does Workflow run?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/22144/images-with-all-colors" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Images with all colors
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/51337/where-did-they-find-the-storm-troopers-for-the-original-star-wars-trilogy-movies" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Where did they find the storm troopers for the original Star Wars trilogy movies?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-bicycles" title="Bicycles Stack Exchange"></div><a href="http://bicycles.stackexchange.com/questions/20566/regulations-regarding-braking-redundancy-on-single-speed-bikes" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:126 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Regulations regarding Braking redundancy on single speed bikes.
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/23102/shortest-code-to-print-random-times" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Shortest code to print ':)' random times
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-security" title="Information Security Stack Exchange"></div><a href="http://security.stackexchange.com/questions/52584/why-can-we-still-crack-snapchat-photos-in-12-lines-of-ruby" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:162 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why can we still crack snapchat photos in 12 lines of Ruby?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-gaming" title="Arqade"></div><a href="http://gaming.stackexchange.com/questions/158875/is-it-worthwhile-to-equip-rookies-with-upgraded-gear" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:41 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is it worthwhile to equip Rookies with upgraded gear?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="http://codegolf.stackexchange.com/questions/22992/alphanumeric-hello-world" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Alphanumeric Hello World
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="http://academia.stackexchange.com/questions/17815/what-to-do-if-assignment-is-against-students-religion" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What to do if assignment is against student's religion?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-tridion" title="Tridion Stack Exchange"></div><a href="http://tridion.stackexchange.com/questions/4802/how-to-install-tridion-cache-channel-windows-service-using-different-host-and-po" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:485 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to install Tridion Cache Channel windows Service using different host and port
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-travel" title="Travel Stack Exchange"></div><a href="http://travel.stackexchange.com/questions/24686/is-it-dangerous-to-go-to-the-usa-as-a-russian-now" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:273 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is it dangerous to go to the USA as a Russian now?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-chemistry" title="Chemistry Stack Exchange"></div><a href="http://chemistry.stackexchange.com/questions/8948/how-to-separate-hcl-and-naoh-from-salt-and-water-solution" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:431 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to separate HCl and NaOH from salt and water solution?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/51313/after-hoth-why-did-vader-pursue-the-millenium-falcon-instead-of-lukes-x-wing" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    After Hoth, why did Vader pursue the Millenium Falcon instead of Luke's X-Wing?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-softwarerecs" title="Software Recommendations Stack Exchange"></div><a href="http://softwarerecs.stackexchange.com/questions/2004/windows-application-for-taking-screenshot-of-current-active-window" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:536 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Windows application for taking screenshot of current active window
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-stackoverflow" title="Stack Overflow"></div><a href="http://stackoverflow.com/questions/22222834/force-my-code-to-use-my-extension-method" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:1 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Force my code to use my extension method
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="http://academia.stackexchange.com/questions/17721/should-i-attend-a-job-interview-after-ive-already-accepted-another-offer" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Should I attend a job interview after I've already accepted another offer?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-biology" title="Biology Stack Exchange"></div><a href="http://biology.stackexchange.com/questions/15529/looking-for-a-dna-sequence" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:375 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Looking for a DNA sequence
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-mathoverflow" title="MathOverflow"></div><a href="http://mathoverflow.net/questions/159468/how-many-complexity-classes-do-you-know" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:504 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How many Complexity Classes do you know?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-math" title="Mathematics Stack Exchange"></div><a href="http://math.stackexchange.com/questions/699002/examples-of-mathematical-results-discovered-late" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:69 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Examples of mathematical results discovered "late"
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-movies" title="Movies &amp; TV Stack Exchange"></div><a href="http://movies.stackexchange.com/questions/17754/when-does-gandalf-realise-that-bilbos-ring-is-the-one-ring" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:367 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    When does Gandalf realise that Bilbo's ring is the One Ring?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-ux" title="User Experience Stack Exchange"></div><a href="http://ux.stackexchange.com/questions/53465/is-there-such-thing-as-touchscreen-friendly-user-interface" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:102 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is there such thing as "touchscreen-friendly" user interface?
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-tex" title="TeX - LaTeX Stack Exchange"></div><a href="http://tex.stackexchange.com/questions/163987/creating-commands-with-a-tex-for-loop" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:85 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Creating commands with a TeX `for` loop
+                </a>
+
+            </li>
+            <li style="display: list-item;" class="dno js-hidden">
+                <div class="favicon favicon-bitcoin" title="Bitcoin Stack Exchange"></div><a href="http://bitcoin.stackexchange.com/questions/23117/how-to-prove-to-my-landlord-that-bitcoin-came-from-my-wallet" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:308 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to prove to my landlord that bitcoin came from my wallet?
+                </a>
+
+            </li>
+    </ul>
+
+        
+</div>
+		</div>
+	
+<div id="feed-link">
+    <div id="feed-link-text">
+        <a href="http://stackoverflow.com/feeds/question/8912917" title="feed of this question and its answers">
+            <span class="feed-icon"></span>question feed
+        </a>
+    </div>
+</div>	<script>
+StackExchange.ready(function(){$.get('/posts/8912917/ivc/42dc');});
+</script>
+<noscript>
+    <div><img src="/posts/8912917/ivc/42dc" class="dno" alt="" width="0" height="0"></div>
+</noscript><div style="display:none" id="prettify-lang">default</div></div>
+
+
+
+        </div>
+    </div>
+    <div id="footer" class="categories">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                        <a href="http://stackoverflow.com/about">about</a>
+                    <a href="http://stackoverflow.com/help">help</a>
+                        <a href="http://stackoverflow.com/help/badges">badges</a>
+                    <a href="http://blog.stackexchange.com/?blb=1">blog</a>
+                        <a href="http://chat.stackoverflow.com/">chat</a>
+                    <a href="http://data.stackexchange.com/">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackexchange.com/about/hiring">jobs</a>
+                    <a href="http://engine.adzerk.net/r?e=eyJhdiI6NDE0LCJhdCI6MjAsImNtIjo5NTQsImNoIjoxMTc4LCJjciI6Mjc3NiwiZG0iOjQsImZjIjoyODYyLCJmbCI6Mjc1MSwibnciOjIyLCJydiI6MCwicHIiOjExNSwic3QiOjAsInVyIjoiaHR0cDovL3N0YWNrb3ZlcmZsb3cuY29tL2Fib3V0L2NvbnRhY3QiLCJyZSI6MX0&amp;s=hRods5B22XvRBwWIwtIMekcyNF8">advertising info</a>
+
+                    <a onclick='StackExchange.switchMobile("on")'>mobile</a>
+                    <b><a href="http://stackoverflow.com/contact">contact us</a></b>
+                        <b><a href="http://meta.stackoverflow.com/">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tbody><tr>
+            <th colspan="3">
+                Technology
+            </th>
+            <th>
+                Life / Arts
+            </th>
+            <th>
+                Culture / Recreation
+            </th>
+            <th>
+                Science
+            </th>
+            <th>
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="http://stackoverflow.com/" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="http://serverfault.com/" title="professional system and network administrators">Server Fault</a></li>
+                        <li><a href="http://superuser.com/" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="http://webapps.stackexchange.com/" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="http://askubuntu.com/" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="http://webmasters.stackexchange.com/" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="http://gamedev.stackexchange.com/" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="http://tex.stackexchange.com/" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="http://programmers.stackexchange.com/" title="professional programmers interested in conceptual questions about software development">Programmers</a></li>
+                        <li><a href="http://unix.stackexchange.com/" title="users of Linux, FreeBSD and other Un*x-like operating systems.">Unix &amp; Linux</a></li>
+                        <li><a href="http://apple.stackexchange.com/" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="http://wordpress.stackexchange.com/" title="WordPress developers and administrators">WordPress Development</a></li>
+                        <li><a href="http://gis.stackexchange.com/" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="http://electronics.stackexchange.com/" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="http://android.stackexchange.com/" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="http://security.stackexchange.com/" title="Information security professionals">Information Security</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="http://dba.stackexchange.com/" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="http://drupal.stackexchange.com/" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="http://sharepoint.stackexchange.com/" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="http://ux.stackexchange.com/" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="http://mathematica.stackexchange.com/" title="users of Mathematica">Mathematica</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (14)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://photo.stackexchange.com/" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="http://scifi.stackexchange.com/" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="http://cooking.stackexchange.com/" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="http://diy.stackexchange.com/" title="contractors and serious DIYers">Home Improvement</a></li>
+                        <li><a href="http://money.stackexchange.com/" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (12)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://english.stackexchange.com/" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="http://skeptics.stackexchange.com/" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="http://judaism.stackexchange.com/" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="http://travel.stackexchange.com/" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="http://christianity.stackexchange.com/" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="http://gaming.stackexchange.com/" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="http://bicycles.stackexchange.com/" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="http://rpg.stackexchange.com/" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (21)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://math.stackexchange.com/" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="http://stats.stackexchange.com/" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                        <li><a href="http://cstheory.stackexchange.com/" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="http://physics.stackexchange.com/" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="http://mathoverflow.net/" title="professional mathematicians">MathOverflow</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (7)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://stackapps.com/" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="http://meta.stackoverflow.com/" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Overflow</a></li>
+                        <li><a href="http://area51.stackexchange.com/" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="http://careers.stackoverflow.com/">Stack Overflow Careers</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</tbody></table>
+                </div>
+            </div>
+
+            <div id="copyright">
+                site design / logo © 2014 stack exchange inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a> 
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="svnrev">
+                rev 2014.3.6.1425
+            </div>
+            
+        </div>
+    </div>
+    <noscript>
+        <div id="noscript-warning">Stack Overflow works best with JavaScript enabled<img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"></div>
+    </noscript>
+<script>var p = "http", d = "static"; if (document.location.protocol == "https:") { p += "s"; d = "engine"; } var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = p + "://" + d + ".adzerk.net/ados.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script>
+<script>
+    var ados = ados || {};
+    ados.run = ados.run || [];
+    ados.run.push(function () { ados_setKeywords('javascript,html,html5');; ados_load(); });         
+</script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-5620270-1');        
+        
+        ga('set', 'dimension2', '|javascript|html|html5|');         
+        ga('send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+            qc.async=true;
+            qc.src=(ssl?'https://secure':'http://edge')+'.quantserve.com/quant.js';
+            s.parentNode.insertBefore(qc, s);
+            var sc=document.createElement('script');
+            sc.async=true;
+            sc.src=(ssl?'https://sb':'http://b') + '.scorecardresearch.com/beacon.js';
+            s.parentNode.insertBefore(sc, s);
+        })();
+        _comscore.push({ c1: "2", c2: "17440561" });
+        _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+    </script>            
+    
+</body></html>

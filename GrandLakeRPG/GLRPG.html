@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Grand Lake RPG</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="author" content="Jakub Szczepaniak" />
+        <script type="text/javascript" src="jquery-2.0.3.js"></script>
+        <script type="text/javascript" src="js/maps.js"></script>
+        <script type="text/javascript" src="js/player.js"></script>
+        <script type="text/javascript" src="js/game.js"></script>
+        <script type="text/javascript" src="js/system.js"></script>
+        <script type="text/javascript" src="js/savesPanel.js"></script>
+        <script type="text/javascript" src="js/skillsPanel.js"></script>
+        <script type="text/javascript" src="js/tooltipPanel.js"></script>
+        <style type="text/css">
+            *{padding:0px;margin:0px;border:0px}
+            html{font: normal 10px Verdana;color:#ddd;background-color:#000}
+            #gameContainer{background-image:url('mybg3.png');position:relative;width:852px;height:560px;border:outset 2px #452A15;margin:20px auto}
+            .panelButton{color:#ddd;font-weight:bold;cursor:pointer;text-shadow: 1px 1px #452A15}
+            .panelButton:hover{text-shadow: 1px 1px #666}
+            .gamePanel{background:url('mybg3.png');color:#eee;border:outset 2px #452A15;display:none;z-index:2;position:absolute}
+            .gamePanelContent{border:inset 2px #452A15;padding:5px}
+            .gameBox{position:absolute;border:inset 2px #452A15}
+
+            /* Saves Panel */
+            #savesPanel{width:400px;overflow:auto;top:40px;left:225px;}
+            #savesPanelSlotList{height:230px;overflow:auto;margin:5px 0}
+            .savesPanelSlotOptions>li{display:inline-block;margin-right:5px}
+            .savesPanelSlot{border-top:solid 1px #999;padding:5px 0}
+            .savesPanelSlotDate{float:right}
+            .savesPanelSlot:hover{background-color:#452A15}
+            .savesPanelSlotTitle{font-weight:bold}
+
+            /* Skills Panel */
+            #skillsPanel{width:484px;overflow:auto;top:0;height:364px;left:184px;border:0}
+            #skillsPanelSkillDescription{height:328px;float:right;width:150px;padding:5px;border-left: outset 2px #452A15}
+            #skillsPanelSkillList{height:328px;overflow:auto;margin:5px 0}
+
+
+            /* Tooltip Panel */
+            #tooltipPanel{width:200px}
+
+            /* Game Canvas Box */
+            #gameCanvas{background-color:#000;top:0;left:184px}
+
+            /* Minimap Canvas Box */
+            #minimap{background-color:#000;left:668px;top:412px}
+
+            /* Game Log Box */
+            #gameLog{overflow:auto;line-height:12px;height:144px;width:480px;left:184px;top:412px}
+            #gameLog>div{padding: 0px 3px}
+            .error{color:#f00}
+            .warning{color:#ffae00}
+            .caution{color:#ff0}
+            .notice{color:#0ff}
+            .text{color:#ddd}
+            .positive{color:#0f0}
+
+            /* Advertisement Box */
+            #advertisement{width:180px;height:408px;top:0;left:668px}
+
+            /* Character Sheet Box */
+            #characterSheet{width:180px;height:556px;top:0;left:0}
+            .statBox{margin:5px}
+            .statHeader{}
+            .statTitle{text-align:left;display:inline-block}
+            .statValue{text-align:right;float:right}
+            .statBreak{height:1px; margin:4px;border:outset 1px #452A15 }
+
+            /* Character Skills Box */
+            #characterSkills{top:364px;left:184px;width:480px;height:44px}
+            #characterSkills>ul{list-style-type:none}
+            .skillBox{float:left;position:relative;width:42px;height:38px;border:solid 2px transparent;margin:1px;text-align:center;cursor:pointer;overflow:hidden}
+            .skillBox img{margin-top:3px}
+            .skillBox:hover{border:outset 2px #452A15;}
+            .skillShortcut{position:absolute;top:1px;right:1px;font-size:9px}
+
+            /* Panel Background */
+            #panelBackground{position:absolute;width:100%;height:100%;top:0;left:0;background-color:#000;opacity:0.6;display:none;z-index:1;}
+
+        </style>
+    </head>
+    <body>
+        <div id="gameContainer">
+            <canvas id="gameCanvas" width="480" height="360" class="gameBox"></canvas>
+            <canvas id="minimap" width="180" height="144" class="gameBox"></canvas>            
+            <div id="gameLog" class="gameBox"></div>  
+            <div id="advertisement" class="gameBox">REKLAMA</div>
+
+            <div id="characterSheet" class="gameBox">
+                <h4>Primary stats</h4>
+
+                <div class="statBox" id="strengthDescription">
+                    <div class="statTitle">Strength</div>
+                    <div class="statValue">
+                        <span id="strengthValue">1</span> 
+                    </div>
+                </div>
+
+                <div class="statBox" id="agilityDescription">
+                    <div class="statTitle">Agility</div>
+                    <div class="statValue">
+                        <span id="agilityValue">1</span> 
+                    </div>
+                </div>
+
+                <div class="statBox" id="staminaDescription">
+                    <div class="statTitle">Stamina</div>
+                    <div class="statValue">
+                        <span id="staminaValue">1</span> 
+                    </div>
+                </div>
+
+                <div class="statBox" id="intellectDescription">
+                    <div class="statTitle">Intellect</div>
+                    <div class="statValue">
+                        <span id="intellectValue">1</span> 
+                    </div>
+                </div>
+
+                <div class="statBox" id="wisdomDescription">
+                    <div class="statTitle">Wisdom</div>
+                    <div class="statValue">
+                        <span id="wisdomValue">1</span> 
+                    </div>
+                </div>
+
+                <div class="statBreak"></div>
+                <h4>Secondary stats</h4>
+
+                <div class="statBox" id="lifeDescription">
+                    <div class="statTitle">Life</div>
+                    <div class="statValue">
+                        <span id="lifeValue"></span> / <span id="lifeMaxValue"></span>
+                    </div>
+                </div>
+
+                <div class="statBox" id="lifeRegenerationDescription">
+                    <div class="statTitle">Life Regen</div>
+                    <div class="statValue">
+                        <span id="lifeRegenValue"></span>
+                    </div>
+                </div>
+
+                <div class="statBox" id="manaDescription">
+                    <div class="statTitle">Mana</div>
+                    <div class="statValue">
+                        <span id="manaValue"></span> / <span id="manaMaxValue"></span>
+                    </div>
+                </div>
+
+                <div class="statBox" id="manaRegenerationDescription">
+                    <div class="statTitle">Mana Regen</div>
+                    <div class="statValue">
+                        <span id="manaRegenValue"></span>
+                    </div>
+                </div>
+
+                <div class="statBox" id="enduranceDescription">
+                    <div class="statTitle">Endurance</div>
+                    <div class="statValue">
+                        <span id="enduranceValue"></span> / <span id="enduranceMaxValue"></span>
+                    </div>
+                </div>
+
+                <div class="statBox" id="enduranceRegenerationDescription">
+                    <div class="statTitle">Endurance Regen</div>
+                    <div class="statValue">
+                        <span id="enduranceRegenValue"></span>
+                    </div>
+                </div>
+
+                <div class="statBox" id="sightDescription">
+                    <div class="statTitle">Sight</div>
+                    <div class="statValue">
+                        <span id="sightValue"></span> / <span id="sightMaxValue"></span>
+                    </div>
+                </div>
+
+                <div class="statBox" id="spellPowerDescription">
+                    <div class="statTitle">Spell Power</div>
+                    <div class="statValue">
+                        <span id="spellPowerValue">0</span>
+                    </div>
+                </div>
+
+                <div class="statBox" id="spellHitDescription">
+                    <div class="statTitle">Spell Hit</div>
+                    <div class="statValue">
+                        <span id="spellHitValue">0</span>
+                    </div>
+                </div>
+
+                <div class="statBox" id="attackPowerDescription">
+                    <div class="statTitle">Attack Power</div>
+                    <div class="statValue">
+                        <span id="attackPowerValue">0</span>
+                    </div>
+                </div>
+
+                <div class="statBox" id="attackHitDescription">
+                    <div class="statTitle">Attack Hit</div>
+                    <div class="statValue">
+                        <span id="attackHitValue">0</span>
+                    </div>
+                </div>
+
+                <!--                <div class="statBox" id="spellPowerDescription">
+                                    <div class="statTitle">Spell Power</div>
+                                    <div class="statValue">
+                                        <span id="spellPowerValue">0</span>
+                                    </div>
+                                </div>-->
+
+                <div class="statBreak"></div>
+
+                <h4>Game info</h4>
+                <div class="statBox" id="posDescription">
+                    <div class="statTitle">Location</div>
+                    <div class="statValue">
+                        <span id="posx">0</span> x <span id="posy">0</span>
+                    </div>
+                </div>
+
+                <div class="statBox" id="moneyDescription">
+                    <div class="statTitle">Money</div>
+                    <div class="statValue">
+                        <span id="moneyGoldValue">0</span><img src="images/gold.png" alt="gold"/>
+                        <span id="moneySilverValue">0</span><img src="images/silver.png" alt="silver"/>
+                        <span id="moneyBronzeValue">0</span><img src="images/bronze.png" alt="bronze"/>
+                    </div>
+                </div>
+
+                <div class="statBox" id="timeDescription">
+                    <div class="statTitle">Time</div>
+                    <div class="statValue">
+                        Hour <span id="hourValue"></span>
+                        (Day <span id="dayValue"></span>)
+                    </div>
+                </div>                
+
+            </div>
+            <div id="characterSkills" class="gameBox">
+                <ul>
+                    <li class="skillBox">
+                        <div class="skillShortcut">1</div>
+                        <img alt="redstar" src="images/portal.png"/>
+                        <div>Portal</div>
+                    </li>
+
+                    <li class="skillBox">
+                        <div class="skillShortcut">2</div>
+                        <img alt="redstar" src="images/fireball.png"/>
+                        <div>Fireball</div>
+                    </li>
+
+                    <li class="skillBox">
+                        <div class="skillShortcut">3</div>
+                        <img alt="redstar" src="images/melee.png"/>
+                        <div>Melee</div>
+                    </li>
+                    <!--
+                                        <li class="skillBox">
+                                            <div class="skillShortcut">4</div>
+                                            <img alt="redstar" src="images/redstar.png"/>
+                                            <div>SKILL</div>
+                                        </li>
+                    
+                                        <li class="skillBox">
+                                            <div class="skillShortcut">5</div>
+                                            <img alt="redstar" src="images/redstar.png"/>
+                                            <div>SKILL</div>
+                                        </li>
+                    
+                                        <li class="skillBox">
+                                            <div class="skillShortcut">6</div>
+                                            <img alt="redstar" src="images/redstar.png"/>
+                                            <div>SKILL</div>
+                                        </li>
+                    
+                                        <li class="skillBox">
+                                            <div class="skillShortcut">7</div>
+                                            <img alt="redstar" src="images/redstar.png"/>
+                                            <div>SKILL</div>
+                                        </li>
+                    
+                                        <li class="skillBox">
+                                            <div class="skillShortcut">8</div>
+                                            <img alt="redstar" src="images/redstar.png"/>
+                                            <div>SKILL</div>
+                                        </li>
+                    
+                                        <li class="skillBox">
+                                            <div class="skillShortcut">9</div>
+                                            <img alt="redstar" src="images/redstar.png"/>
+                                            <div>SKILL</div>
+                                        </li>
+                    
+                                        <li class="skillBox">
+                                            <div class="skillShortcut">0</div>
+                                            <img alt="redstar" src="images/redstar.png"/>
+                                            <div>SKILL</div>
+                                        </li>
+                    -->
+                </ul>
+            </div>
+
+            <div id="savesPanel" class="gamePanel">
+                <div class="gamePanelContent">
+                    <div>
+                        <strong>Save name: </strong>
+                        <input type="text" id="saveNameValue"/>
+                        <span id="saveSave" class="panelButton">Save</span>
+                    </div>
+                    <div id="savesPanelSlotList"></div>
+                    <span id="savesPanelCloseButton" class="panelButton">Close panel</span>
+                </div>
+            </div>
+
+            <div id="skillsPanel" class="gamePanel">
+                <div class="gamePanelContent">
+                    <div id="skillsPanelSkillDescription">
+                        <h4>Skill Description</h4>
+                    </div>
+                    <div id="skillsPanelSkillList">
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/portal.png"/>
+                            <div>Portal</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/fireball.png"/>
+                            <div>Fireball</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/melee.png"/>
+                            <div>Melee</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/portal.png"/>
+                            <div>Portal</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/fireball.png"/>
+                            <div>Fireball</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/melee.png"/>
+                            <div>Melee</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/portal.png"/>
+                            <div>Portal</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut">2</div>
+                            <img alt="redstar" src="images/fireball.png"/>
+                            <div>Fireball</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/melee.png"/>
+                            <div>Melee</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/portal.png"/>
+                            <div>Portal</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/fireball.png"/>
+                            <div>Fireball</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut">3</div>
+                            <img alt="redstar" src="images/melee.png"/>
+                            <div>Melee</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/portal.png"/>
+                            <div>Portal</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/fireball.png"/>
+                            <div>Fireball</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/melee.png"/>
+                            <div>Melee</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut">1</div>
+                            <img alt="redstar" src="images/portal.png"/>
+                            <div>Portal</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/fireball.png"/>
+                            <div>Fireball</div>
+                        </div>
+
+                        <div class="skillBox">
+                            <div class="skillShortcut"></div>
+                            <img alt="redstar" src="images/melee.png"/>
+                            <div>Melee</div>
+                        </div>
+
+
+                    </div>
+                    <span id="skillsPanelCloseButton" class="panelButton">Close panel</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="tooltipPanel" class="gamePanel">
+            <div class="gamePanelContent">
+
+            </div>
+        </div>
+
+        <div id="panelBackground"></div>
+
+
+        <script type="text/javascript">
+            $(function() {
+
+                images.player = new Image();
+                images.player.src = 'images/redstar.png';
+
+                system = new systemClass();
+                player = new playerClass();
+                game = new gameClass();
+                activePanel = 'game';
+
+                system.log('Preparing enviroment...');
+                system.loadImages(function() {
+                    system.clearLog();
+                    player.img = images.player;
+                    game.setMap(system.currentMap);
+                    game.nextHour();
+                    system.drawMap(activeMap);
+                    savesPanel = new savesPanelClass();
+                    skillsPanel = new skillsPanelClass();
+                    tooltipPanel = new tooltipPanelClass();
+                    $(window).keydown(system.checkAction);
+                    
+                    $('#skillsPanelSkillList').children().clone().appendTo('#skillsPanelSkillList').clone().appendTo('#skillsPanelSkillList');
+                });
+            });
+        </script>
+    </body>
+</html>

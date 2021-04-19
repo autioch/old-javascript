@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Planner</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/planner.css" rel="stylesheet" media="screen">
+    </head>
+    <body>
+        <div id="ribbon">
+            <div class="js-print">Print</div>
+            <!--<div class="js-save">Save</div>-->
+        </div>
+        <table id="day-table" class="planner-table">
+            <thead class="day-description"></thead>
+            <tbody id="day-wrapper">
+
+            </tbody>
+            <tfoot class="day-description"></tfoot>
+        </table>
+        <div id="lessons"></div>
+        <div id="print-wrapper">
+            <table id="js-day-print" class="planner-table">
+                <thead class="day-description"></thead>
+                <tbody class="js-day-print">
+
+                </tbody>
+                <tfoot class="day-description"></tfoot>
+            </table>
+            <div class="js-close"></div>
+        </div>
+        <div class="cover js-print-wrapper"></div>
+        <script type="application/javascript" src="files/jquery.js"></script>
+        <script type="application/javascript" src="files/jquery-ui.min.js"></script>
+        <script type="application/javascript" src="files/lodash.js"></script>        
+        <script type="application/javascript" src="files/config.js"></script>      
+        <script type="application/javascript" src="lessons.js"></script>
+        <script type="application/javascript" src="files/planner.js"></script>
+    </body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <body onload="ready()">
+        <script type="text/javascript">
+            
+            /* call() wykonuje funkcję a w zasiegu funkcji b
+             * czyli b zyskuje wlasciwosci i metody a
+             * ale! nie zyskuje wlasciwosci z a.prototype
+             * 
+             * mozna dodawac do prototype, ale przy ustawianiu
+             * nowej klasy jako prototype tracimy poprzednie dodane
+             * 
+             * rozwiazaniem byloby rozszerzanie prototypu o nowy prototyp
+             * czyli jakas funkcja extend, z tym, ze wazna jest kolejnosc
+             * 
+             * jQuery:
+             * one.prototype = $.extend(
+             *      {},
+             *      two.prototype,
+             *      one.prototype
+             * );
+             * */
+            
+            function ready() {
+                function one() {
+                    console.log('one called/created');
+                    function onePrivate() {
+                        console.log('onePrivate called/created');
+                    }
+                    this.onePublic = function() {
+                        console.log('onePublic called/created');
+                        onePrivate();
+                    }
+                }
+
+                function two() {
+                    console.log('two called/created');
+                    function twoPrivate() {
+                        console.log('twoPrivate called/created');
+                    }
+
+                    this.twoPublic = function() {
+                        console.log('twoPublic called/created');
+                        twoPrivate();
+                    };
+                }
+
+                function three() {
+                    function threePrivate() {
+                        console.log('threePrivate called/created');
+                    }
+
+                    console.log('three called/created');
+                    this.threePublic = function() {
+                        console.log('threePublic called/created');
+                        threePrivate();
+                    };
+                }
+
+                one.prototype.onePrototyped = function() {
+                    console.log('onePrototyped called/created');
+                }
+
+                two.prototype.twoPrototyped = function() {
+                    console.log('twoPrototyped called/created');
+                }
+
+                three.prototype.threePrototyped = function() {
+                    console.log('threePrototyped called/created');
+                }
+
+                console.group('Create o1');
+                o1 = new one();
+                console.groupEnd();
+
+                console.group('Protoype shenanigans');
+
+                /* o1 nie dostanie wlasciwosci two,
+                 * zachowa onePrototyped, uzyska twoPrototyped
+                 * 
+                 * wszystkie kolejne instancje one maja zmieniony prototype
+                 * 
+                 * zamiast tak robic, lepiej jest rozszerzac prototyp
+                 */
+                one.prototype = new two(); //bad!
+                //one.prototype.constructor = one;
+                console.groupEnd();
+
+                console.group('Create o2');
+                o2 = new one();
+                console.groupEnd();
+
+                console.group('Create o3');
+                o3 = new one();
+                three.call(o3);
+                //three.prototype.call(o3);  tak to nie działa!
+                console.groupEnd();
+
+                console.group('o1');
+                console.log(o1);
+                for (var a in o1) {
+                    console.log(o1[a], a);
+                    if (typeof o1[a] === 'function') {
+                        o1[a]();
+                    }
+                }
+                console.groupEnd();
+
+                console.group('o2');
+                console.log(o2);
+                for (var a in o2) {
+                    console.log(o2[a], a);
+                    if (typeof o2[a] === 'function') {
+                        o2[a]();
+                    }
+                }
+                console.groupEnd();
+
+                console.group('o3');
+                console.log(o3);
+                for (var a in o3) {
+                    console.log(o3[a], a);
+                    if (typeof o3[a] === 'function') {
+                        o3[a]();
+                    }
+                }
+                console.groupEnd();
+
+
+
+            }
+        </script>
+    </body>
+</html>

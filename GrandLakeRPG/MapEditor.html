@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Grand Lake Map Editor</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script type="text/javascript" src="jquery-2.0.3.js"></script>
+        <style type="text/css">
+            html {font: 11px Verdana}
+            td,body,h5,input,p{border:0;padding:0;margin:0}
+            h5{margin-bottom:5px}
+            p{line-height: 20px}
+            .toolbox{float:left;border:solid 1px #aaa;margin:5px;padding:5px}
+            .button{padding:5px 0;cursor:pointer;color:#0000ff;font-weight:bold}
+            input[type=number] {width:30px;padding:1px;border:solid 1px #aaa}
+            textarea{width:600px;height:100px;padding:1px;border:solid 1px #aaa}
+            td {user-select:none;-o-user-select:none;-moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none}
+            table{cursor:pointer;border-collapse: separate;border-spacing:0px;text-align:center}
+            td{border:solid 1px #aaa;padding:1px;width:20px;height:20px}
+            #map{border-collapse: collapse;font-size:0;width:auto}
+            #fillingTable td.selected {border:solid 2px #00ff00;padding:0;font-weight:bold} 
+        </style>        
+    </head>
+    <body>
+        <div class="toolbox">
+            <h5>Opcje</h5>
+            <p>
+                <span class="button" id="save">Zapisz</span>
+            </p>
+            <p>
+                <span class="button" id="load">Wczytaj</span>
+            </p>
+        </div>
+        <div class="toolbox">
+            <h5>Ustawienia mapy</h5>
+            <p>
+                <label>Szerokość</label> 
+                <input type="number" id="width" min="0" max="200" value="10">  
+                <label>Wysokość</label>      
+                <input type="number" id="height" min="0" max="200" value="10">   
+            </p>
+            <p>
+                <span class="button" id="set">Utwórz mapę</span>   
+            </p>
+        </div>
+        <div class="toolbox">
+            <h5>Wypełnienie</h5>
+            <table id="fillingTable">
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="toolbox">
+            <h5>Info</h5>
+            <p>Mapa stworzona w <span id="mapCreateTime">0</span>ms</p>
+            <p>Mapa wczytana w <span id="mapLoadTime">0</span>ms</p>
+            <p>Kursor na pozycji <span id="tilex">0</span> x <span id="tiley">0</span></p>
+        </div>
+        <h5 style="clear:both;margin:5px">Edycja mapy</h5>
+        <table id="map" style="min-height:50px;margin:5px;margin-bottom:20px">
+            <tbody>
+
+            </tbody>
+        </table>
+        <div style="clear:both;margin:5px">
+            <h5>Wynik zapisania</h5>
+            <textarea id="saveArea"></textarea>
+        </div>
+        <div style="clear:both;margin:5px">
+            <h5>Kod mapy do wczytania</h5>
+            <textarea id="loadArea"></textarea>
+        </div>        
+
+        <script type="text/javascript">
+            var colors = {
+                0: '#000000',
+                1: '#808080',
+                2: '#C0C0C0',
+                3: '#FFFFFF',
+                4: '#800000',
+                5: '#FF0000',
+                6: '#808000',
+                7: '#FFFF00',
+                8: '#008000',
+                9: '#00FF00',
+                10: '#008080',
+                11: '#00FFFF',
+                12: '#000080',
+                13: '#0000FF',
+                14: '#800080',
+                15: '#FF00FF',
+                16: '#7F3300',
+                17: '#0094FF',
+                18: '#4C3C32',
+                19: '#82CDFF',
+                20: '#000000',
+                21: '#000000',
+                22: '#000000',
+                23: '#000000'
+            };
+
+            var filling, moving, changed = false, map = $('#map tbody');
+            var time1, time2, tilex = $('#tilex'), tiley = $('#tiley');
+
+            function setupFilling() {
+                var fillingTable = $('#fillingTable tbody'), r = $('<tr/>'), c, t, count = 0;
+                for (var c in colors) {
+                    t = $('<td/>');
+                    t.css('background-color', colors[c]).html(c).appendTo(r);
+                    count++;
+                    if (count > 7) {
+                        count = 0;
+                        r.appendTo(fillingTable);
+                        r = $('<tr/>');
+                    }
+                }
+                fillingTable.append(r);
+                fillingTable.on('click', 'td', function() {
+                    $('#fillingTable td').removeClass('selected');
+                    filling = $(this).addClass('selected').html();
+                });
+                $('#fillingTable td:first').click();
+            }
+
+            function setupMap() {
+                /* permament listeners, could be done better */
+                map.on('mousedown', 'td', function() {
+                    $(this).html(filling).css('background-color', colors[filling]);
+                    changed = true;
+                    moving = true;
+                });
+                map.on('mouseup', 'td', function() {
+                    moving = false;
+                });
+                map.on('mouseleave', function() {
+                    moving = false;
+                });
+                map.on('mousemove', 'td', function() {
+                    tilex.html($(this).index());
+                    tiley.html($(this).parent().index());
+                    if (moving) {
+                        $(this).html(filling).css('background-color', colors[filling]);
+                        changed = true;
+                    }
+                });
+            }
+
+            function newMap() {
+                if (!isMapSaved()) {
+                    return;
+                }
+                time1 = new Date().getTime();
+                var width = $('#width').val(), height = $('#height').val(), i, j, r;
+                map.children().remove();
+
+                r = $('<tr/>');
+                for (j = 0; j < width; j++) {
+                    $('<td>' + filling + '</td>').appendTo(r).css('background-color', colors[filling]);
+                }
+
+                for (i = 0; i < height; i++) {
+                    r.clone().appendTo(map);
+                }
+                changed = false;
+                time2 = new Date().getTime();
+                $('#mapCreateTime').html(time2 - time1);
+            }
+
+            function saveMap() {
+                var result = [], row;
+                $('#map tr').each(function() {
+                    row = [];
+                    $(this).children('td').each(function() {
+                        row.push(parseInt($(this).html()));
+                    });
+                    result.push(row);
+                });
+                $('#saveArea').val(JSON.stringify(result).replace(/\],\[/g, "],\n["));
+                changed = false;
+            }
+
+            function loadMap() {
+                if (!isMapSaved()) {
+                    return;
+                }
+                time1 = new Date().getTime();
+                var m = JSON.parse($('#loadArea').val()), i, j, r;
+
+
+                $('#width').val(m[0].length);
+                $('#height').val(m.length);
+
+                map.children().remove();
+                for (i = 0; i < m.length; i++) {
+                    r = $('<tr/>');
+                    for (j = 0; j < m[0].length; j++) {
+                        $('<td>' + m[i][j] + '</td>').appendTo(r).css('background-color', colors[m[i][j]]);
+                    }
+                    r.appendTo(map);
+                }
+                changed = false;
+                time2 = new Date().getTime();
+                $('#mapLoadTime').html(time2 - time1);
+            }
+
+            function isMapSaved() {
+                return !changed || confirm('Niezapisane zmiany. Porzucić?');
+            }
+
+            $(function() {
+                setupFilling();
+                setupMap();
+                $('#set').on('click', newMap);
+                $('#save').on('click', saveMap);
+                $('#load').on('click', loadMap);
+            });
+        </script>
+    </body>
+</html>
